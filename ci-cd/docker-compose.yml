@@ -1,33 +1,18 @@
-version: '3.8'
 
 services:
-  user_microservice:
+  user_microservice_v1:
     build:
       context: ./user_microservice
-    container_name: user_microservice
-    ports:
-      - "5001:5001"  # Maps to host IP's 5001
     environment:
-      - PYTHONUNBUFFERED=1
-      - PIP_INDEX_URL=https://pypi.org/simple/
+      - MONGO_URI=${MONGO_URI}
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
     depends_on:
-      - mongo
-    networks:
-      - app-network
-
-  mongo:
-    image: mongo:5.0
-    container_name: mongo
+      - kafka
+      - zookeeper
     ports:
-      - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
+      - "5001:5001"
     networks:
-      - app-network
-
-volumes:
-  mongo-data:
-
+      - microservice_network
 networks:
-  app-network:
+  microservice_network:
     driver: bridge
