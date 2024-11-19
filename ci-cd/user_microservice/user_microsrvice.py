@@ -6,7 +6,7 @@ app = Flask(__name__)
 api = Api(app)
 
 # MongoDB connection setup
-client = MongoClient("mongodb+srv://Toukir:1234@cluster0.c7fq4ik.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+client = MongoClient("mongodb://mongo:27017/")
 db = client['my_assignment_db']
 user_collection = db['user']
 
