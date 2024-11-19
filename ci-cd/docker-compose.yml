@@ -1,17 +1,13 @@
-version: '3.8'
 
 services:
   user_microservice_v1:
     build:
       context: ./user_microservice
     environment:
-      - MONGO_URI=${MONGO_URI}  # Ensure you set this variable in your .env file
-      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - MONGO_URI=mongodb://mongo:27017/my_assignment_db
     depends_on:
       - mongo
-    ports:
-      - "5001:5001"
-  
+
   mongo:
     image: mongo:5.0
     container_name: mongo
@@ -19,9 +15,6 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
-    networks:
-      - microservice_network
 
-networks:
-  microservice_network:
-    driver: bridge
+volumes:
+  mongo-data:
